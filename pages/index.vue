@@ -2,7 +2,7 @@
   <div class="container">
     <div class="main-image">
       <h2 class="main-title">丹佑太のポートフォリオ</h2>
-      <img class="main-visual" src="~/assets/image/home-image.jpg">
+      <img class="main-visual" src="~/assets/home-image.jpg">
     </div>
   </div>
 </template>

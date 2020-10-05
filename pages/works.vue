@@ -1,29 +1,29 @@
 <template>
-  <div class="container">
+  <div class="bg-gray">
     <div class="main-image">
       <h2 class="main-title">WORKS</h2>
-      <img class="main-visual" src="~/assets/image/works-image.jpg">
+      <img class="main-visual" src="~/assets/works-image.jpg">
     </div>
     <div class="content-inner">
       <div class="works-inner">
-        <small class="works-item" to="/">
-          <nuxt-link to="/">
-            <img class="works-item__img" src="~/assets/image/home-image.jpg">
+        <div class="works-item">
+          <nuxt-link to="/todos">
+            <img class="works-item__img" src="~/assets/todos-image.png">
           </nuxt-link>
           <span class="works-item__text">ToDoリスト管理アプリ</span>
-        </small>
-        <small class="works-item" to="/">
-          <nuxt-link to="/">
-            <img class="works-item__img" src="~/assets/image/home-image.jpg">
+        </div>
+        <div class="works-item">
+          <nuxt-link to="/articles">
+            <img class="works-item__img" src="~/assets/articles-image.png">
           </nuxt-link>
-          <span class="works-item__text">ToDoリスト管理アプリ</span>
-        </small>
-        <small class="works-item" to="/">
-          <nuxt-link to="/">
-            <img class="works-item__img" src="~/assets/image/home-image.jpg">
+          <span class="works-item__text">Qiita最新記事表示アプリ</span>
+        </div>
+        <div class="works-item">
+          <nuxt-link to="/chat">
+            <img class="works-item__img" src="~/assets/chat-image.png">
           </nuxt-link>
-          <span class="works-item__text">ToDoリスト管理アプリ</span>
-        </small>
+          <span class="works-item__text">認証機能付きチャットアプリ</span>
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +38,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bg-gray{
+  background-color: #f7f7f7;
+}
 .main-image {
   position: relative;
 }
@@ -60,14 +63,13 @@ export default {
 }
 .works-inner {
   width: 100%;
-  margin: 60px 0;
+  padding: 60px 0;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   .works-item {
     width: 30%;
     height: auto;
-    border: solid 1px #000;
     text-align: center;
     .works-item__img {
       width: 100%;
@@ -83,6 +85,16 @@ export default {
   }
   .content-inner {
     padding: 0 30px;
+  }
+  .works-inner {
+    flex-direction: column;
+    .works-item {
+      width: 60%;
+      margin: 0 auto 48px;
+    }
+    .works-item:last-of-type {
+      margin-bottom: 0;
+    }
   }
 
 }

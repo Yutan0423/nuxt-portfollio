@@ -2,7 +2,7 @@
   <div class="container">
     <div class="main-image">
       <h2 class="main-title">ABOUT</h2>
-      <img class="main-visual" src="~/assets/image/about-image.jpg">
+      <img class="main-visual" src="~/assets/about-image.jpg">
     </div>
     <div class="content-inner">
       <section>

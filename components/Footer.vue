@@ -7,6 +7,7 @@
 <style scoped lang="scss">
 footer {
   height: 52px;
+  width: 100%;
   background-color: rgb(21, 32, 43);
   display: flex;
   justify-content: center;

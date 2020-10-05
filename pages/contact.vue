@@ -2,7 +2,7 @@
   <div class="container">
     <div class="main-image">
       <h2 class="main-title">CONTACT</h2>
-      <img class="main-visual" src="~/assets/image/contact-image.jpg">
+      <img class="main-visual" src="~/assets/contact-image.jpg">
     </div>
     <div class="content-inner">
         <form class="contact-form" action="/">
