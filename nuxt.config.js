@@ -9,13 +9,15 @@ const routerBase =
     : {}
 
 export default {
-  ssr: false, //or universal,
+  ssr: false,
+  // ssr: false, //or universal,
   router: {
     base: '/nuxtproject/'
   },
   ...routerBase,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
+    script: [{ src: '/js/404-redirect-ghpages.js' }], // これを追記
     title: 'nuxt-portfolio',
     meta: [
       { charset: 'utf-8' },
