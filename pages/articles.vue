@@ -5,7 +5,7 @@
         </h2>
 		<ul>
 		 	<li class="posts-item" v-for="(post, index) in posts" :key="index">
-		 		<a :href="'post.url'" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
+		 		<a :href="post.url" target="_blank" rel="noopener noreferrer">{{ post.title }}</a>
                  <hr>
 			</li>
 		</ul>
@@ -16,28 +16,38 @@
 	export default {
 		async asyncData({ $axios }) {
 			// 取得先のURL
-			const url = "https://qiita.com/api/v2/items?query=tag:nuxt.js"
+			const url = `https://qiita.com/api/v2/items?query=tag:Nuxt.js`;
 			// リクエスト（Get）
 			const response = await $axios.$get(url)
 			// 配列で返ってくるのでJSONにして返却
 			return {
 				posts: response
 			}
-		}
+		},
+
+
 	}
 </script>
 
 <style scoped>
+input {
+	display: block;
+	font-size: 16px;
+	padding: 4px;
+	margin-left: 10%;
+}
 .content-inner {
   max-width: 990px;
   padding: 0 60px;
   margin: 48px auto 64px;
 }
 .content-title {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+		display: flex;
+		align-items: center;
 }
 ul {
-	padding: 0;	
+	padding: 0;
 }
 .posts-item {
     margin-bottom: 16px;
