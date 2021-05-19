@@ -1,190 +1,128 @@
 <template>
-    　<div id="app">
-        <header class="header">
-        <h2>Chatアプリ</h2>
-        <!-- ログイン時にはフォームとログアウトボタンを表示 -->
-        <div v-if="user.uid" key="login">
-            [{{ user.displayName }}]
-            <button type="button" @click="doLogout">ログアウト</button>
-        </div>
-        <!-- 未ログイン時にはログインボタンを表示 -->
-        <div v-else key="logout">
-            <button type="button" @click="doLogin">ログイン</button>
-        </div>
-        </header>
-
-        <!--　Firebase から取得したリストを描画（トランジション付き）　-->
-        <transition-group name="chat" tag="div" class="list content">
-        <section v-for="{ key, name, image, message } in chat" :key="key" class="item">
-            <div class="item-image"><img :src="image" width="40" height="40"></div>
-            <div class="item-detail">
-            <div class="item-name">{{ name }}</div>
-            <div class="item-message">
-                <nl2br tag="div" :text="message"/>
-            </div>
-            </div>
-        </section>
-        </transition-group>
-    
-        <!-- 入力フォーム -->
-        <form action="" @submit.prevent="doSend" class="form">
-        <textarea
-            v-model="input"
-            :disabled="!user.uid"
-            @keydown.enter.exact.prevent="doSend"></textarea>
-        <button type="submit" :disabled="!user.uid" class="send-button">Send</button>
+  <div class="content-inner">
+    <h2 class="content-title">Bulletin board</h2>
+      <div class="form-inner">
+        <form @submit.prevent="add" action="">
+            <label for="name">Name</label>
+            <input class="form-text" id="name" v-model="name" type="text">
+            <label for="message">message</label>
+            <textarea class="form-text" name="message" v-model="message" cols="30" rows="6"></textarea>
+            <button>Send message</button>
         </form>
       </div>
+        <h3 class="content-subtitle">Time Line</h3>
+        <ul>
+            <li v-for="content in contents" :key="content.id">
+                <span v-if="content.created">
+                    <span>
+                      {{content.created.toDate() | dateFilter}} : {{content.name}} 
+                    </span>
+                    <hr>
+                    <span>
+                      {{content.message}}
+                    </span>
+                    <button @click="remove(content.id)">Delete</button>
+                </span>
+            </li>
+        </ul>
+  </div>
 </template>
 
 <script>
-// firebase モジュール
-import firebase from 'firebase'
-// 改行を <br> タグに変換するモジュール
-import Nl2br from 'vue-nl2br'
+import moment from 'moment'
 export default {
-  components: { Nl2br },
-  data() {
-    return {
-      user: {},  // ユーザー情報
-      chat: [],  // 取得したメッセージを入れる配列
-      input: ''  // 入力したメッセージ
+    data() {
+        return {
+            name: '',
+            message: ''
+        }
+    },
+    created() {
+        this.$store.dispatch('chat/init')
+    },
+    methods: {
+        add() {
+            this.$store.dispatch('chat/add', [this.name, this.message])
+            this.name = ''
+            this.message=''
+        },
+        remove(id) {
+            this.$store.dispatch('chat/remove', id)
+        }
+    },
+    computed: {
+        contents() {
+            // return this.$store.state.todos.todos
+            return this.$store.getters['chat/orderedContents']
+        }
+    },
+    filters: {
+        dateFilter(date) {
+            return moment(date).format('YYYY/MM/DD HH:mm:ss')
+        }
     }
-  },
-  created() {   
-    firebase.auth().onAuthStateChanged(user => {
-      this.user = user ? user : {}
-      const ref_message = firebase.database().ref('message')
-      if (user) {
-        this.chat = []
-        // message に変更があったときのハンドラを登録
-        ref_message.limitToLast(10).on('child_added', this.childAdded)
-      } else {
-        // message に変更があったときのハンドラを解除
-        ref_message.limitToLast(10).off('child_added', this.childAdded)
-      }
-    })
-  },
-  methods: {
-    // ログイン処理
-    doLogin() {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithPopup(provider)
-    },
-    // ログアウト処理
-    doLogout() {
-      firebase.auth().signOut()
-    },
-    // スクロール位置を一番下に移動
-    scrollBottom() {
-      this.$nextTick(() => {
-        window.scrollTo(0, document.body.clientHeight)
-      })
-    },
-    // 受け取ったメッセージをchatに追加
-    // データベースに新しい要素が追加されると随時呼び出される
-    childAdded(snap) {
-      const message = snap.val()
-      this.chat.push({
-        key: snap.key,
-        name: message.name,
-        image: message.image,
-        message: message.message
-      })
-      this.scrollBottom()
-    },
-    doSend() {
-      if (this.user.uid && this.input.length) {
-        // firebase にメッセージを追加
-        firebase.database().ref('message').push({
-          message: this.input,
-          name: this.user.displayName,
-          image: this.user.photoURL
-        }, () => {
-          this.input = '' // フォームを空にする
-        })
-      }
-    }
-  }
 }
 </script>
 
-<style scoped>
-* {
-  margin: 0;
-  box-sizing: border-box;
+<style lang="scss" scoped>
+.content-inner {
+  max-width: 990px;
+  padding: 0 60px;
+  margin: 48px auto 64px;
 }
-.header {
-  background-color: rgb(29, 161, 242);
-  margin-bottom: 1em;
-  padding: 0.4em 0.8em;
-  color: #fff;
+.content-title {
+    text-align: center;
+    margin-bottom: 16px;
 }
-.content {
+.content-subtitle {
+    margin-bottom: 16px;
+}
+.form-inner {
+  width: 80%;
   margin: 0 auto;
-  padding: 0 10px;
-  max-width: 600px;
 }
-.form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  width: 100%;
-  background: #f5f5f5;
+form {
+    margin-bottom: 48px;
+    text-align: center;
+    label {
+      display: block;
+      text-align-last: left;
+    }
+    .form-text {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 18px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #eaedf2;
+      font-size: 16px;
+      padding: 8px 16px;
+    }
+    button {
+      width: 100%;
+      height: 48px; 
+      border-radius: 6px;
+      font-size: 20px;
+      background-color: rgb(29, 161, 242);
+      color: #fff;
+      border: none;
+    }
 }
-.form textarea {
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  height: 4em;
-  width: calc(100% - 6em);
-  resize: none;
+ul {
+    padding: 0;
+    li {
+        list-style: none;
+        margin-bottom: 8px;
+        span > span.done {
+            text-decoration: line-through;
+        }
+    }
 }
-.list {
-  margin-bottom: 100px;
-}
-.item {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 0.8em;
-}
-.item-image img {
-  border-radius: 20px;
-  vertical-align: top;
-}
-.item-detail {
-  margin: 0 0 0 1.4em;
-}
-.item-name {
-  font-size: 75%;
-}
-.item-message {
-  position: relative;
-  display: inline-block;
-  padding: 0.8em;
-  background: #deefe8;
-  border-radius: 4px;
-  line-height: 1.2em;
-}
-.item-message::before {
-  position: absolute;
-  content: " ";
-  display: block;
-  left: -16px;
-  bottom: 12px;
-  border: 4px solid transparent;
-  border-right: 12px solid #deefe8;
-}
-.send-button {
-  height: 4em;
-}
-/* トランジション用スタイル */
-.chat-enter-active {
-  transition: all 1s;
-}
-.chat-enter {
-  opacity: 0;
-  transform: translateX(-1em);
+@media screen and (max-width: 768px) {
+    .content-inner {
+        padding: 0 30px;
+    }
 }
 </style>
+
+

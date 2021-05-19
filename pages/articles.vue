@@ -36,6 +36,9 @@
 .content-title {
     margin-bottom: 16px;
 }
+ul {
+	padding: 0;	
+}
 .posts-item {
     margin-bottom: 16px;
     list-style: none;

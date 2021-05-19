@@ -10,19 +10,19 @@
           <nuxt-link to="/todos">
             <img class="works-item__img" src="~/assets/todos-image.png">
           </nuxt-link>
-          <span class="works-item__text">ToDoリスト管理アプリ</span>
+          <span class="works-item__text">Firebaseを用いた<br>ToDoリスト管理アプリ</span>
         </div>
         <div class="works-item">
           <nuxt-link to="/articles">
             <img class="works-item__img" src="~/assets/articles-image.png">
           </nuxt-link>
-          <span class="works-item__text">Qiita最新記事表示アプリ</span>
+          <span class="works-item__text">Axiosを用いた<br>Qiita最新記事表示アプリ</span>
         </div>
         <div class="works-item">
           <nuxt-link to="/chat">
             <img class="works-item__img" src="~/assets/chat-image.png">
           </nuxt-link>
-          <span class="works-item__text">認証機能付きチャットアプリ</span>
+          <span class="works-item__text">Firebaseを用いた<br>掲示板アプリ</span>
         </div>
       </div>
     </div>
@@ -94,6 +94,9 @@ export default {
     }
     .works-item:last-of-type {
       margin-bottom: 0;
+    }
+    .works-item__text{
+      font-size: 14px;
     }
   }
 

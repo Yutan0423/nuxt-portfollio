@@ -7,16 +7,16 @@
         <nav v-if="windowWidth > 768">
             <ul class="gnav">
                 <li class="gnav-items">
-                    <nuxt-link　:class="gnavFixed" active-class="link-active" class="gnav-link" to="/" exact>Home</nuxt-link>
+                    <nuxt-link :class="gnavFixed" active-class="link-active" class="gnav-link" to="/" exact>Home</nuxt-link>
                 </li>
                 <li class="gnav-items">
-                    <nuxt-link　:class="gnavFixed" active-class="link-active" class="gnav-link" to="/about" exact>About</nuxt-link>
+                    <nuxt-link :class="gnavFixed" active-class="link-active" class="gnav-link" to="/about" exact>About</nuxt-link>
                 </li>
                 <li class="gnav-items">
-                    <nuxt-link　:class="gnavFixed" active-class="link-active" class="gnav-link" to="/works">Works</nuxt-link>
+                    <nuxt-link :class="gnavFixed" active-class="link-active" class="gnav-link" to="/works">Works</nuxt-link>
                 </li>
                 <li class="gnav-items">
-                    <nuxt-link　:class="gnavFixed" active-class="link-active" class="gnav-link" to="/contact">Contact</nuxt-link>
+                    <nuxt-link :class="gnavFixed" active-class="link-active" class="gnav-link" to="/contact">Contact</nuxt-link>
                 </li>
             </ul>
         </nav>
@@ -182,6 +182,6 @@ export default {
     .site-title{
         font-size: 14px;
     }
-    
+
 }
 </style>

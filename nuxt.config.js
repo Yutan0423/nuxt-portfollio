@@ -1,20 +1,23 @@
 const webpack = require('webpack')
-const routerBase =
-  process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? {
-        router: {
-          base: '/nuxtproject/'
-        }
-      }
-    : {}
+// const routerBase =
+//   process.env.DEPLOY_ENV === 'GH_PAGES'
+//     ? {
+//         router: {
+//           base: '/nuxtproject/'
+//         }
+//       }
+//     : {}
 
 export default {
+  generate: {
+    fallback: true
+  },
   ssr: false,
   // ssr: false, //or universal,
-  router: {
-    base: '/nuxtproject/'
-  },
-  ...routerBase,
+  // router: {
+  //   base: '/nuxtproject/'
+  // },
+  // ...routerBase,
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     script: [{ src: '/js/404-redirect-ghpages.js' }], // これを追記
