@@ -1,9 +1,9 @@
 <template>
   <div>
     <Header @clickSpNav="clickSpNav" :spNavFlag="spNavFlag" />
-      <template v-if="spNavFlag">
-          <Spnav @clickSpNav="clickSpNav" v-if="spNavFlag"/>
-      </template>
+    <template v-if="spNavFlag">
+      <Spnav @clickSpNav="clickSpNav" v-if="spNavFlag" />
+    </template>
     <div>
       <Nuxt />
     </div>
@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Header from "~/components/Header.vue"
-import Footer from "~/components/Footer.vue"
-import Spnav from "~/components/Spnav.vue"
+import Header from "~/components/Header.vue";
+import Footer from "~/components/Footer.vue";
+import Spnav from "~/components/Spnav.vue";
 export default {
   components: {
     Header,
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       spNavFlag: false
-    }
+    };
   },
   methods: {
     clickSpNav() {
@@ -38,20 +38,13 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style>
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -67,23 +60,4 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-/* アニメーション付与 */
-/* .fade-enter {
-opacity: 0;
-}
-.fade-enter-active {
-transition: opacity 0.5s;
-}
-.fade-enter-to {
-opacity: 1;
-}
-.fade-leave {
-opacity: 1;
-}
-.fade-leave-active {
-transition: opacity 0.5s;
-}
-.fade-leave-to {
-opacity: 0;
-} */
 </style>
