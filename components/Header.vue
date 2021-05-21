@@ -153,7 +153,6 @@ export default {
   color: #ffffff;
   padding: 8px 0;
   margin-right: 24px;
-  transition-delay: 0.5s;
   &:hover {
     border-bottom: 2px solid #fff;
   }
